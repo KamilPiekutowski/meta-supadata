@@ -20,6 +20,7 @@ DEPENDS += " \
     eudev \
     fftw \
     jack \
+    jack-setup \
     libsndfile1 \
     alsa-lib \
     libxt \
