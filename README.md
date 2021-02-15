@@ -25,3 +25,9 @@ Maintainers
 -----------
 
 Layer maintainer: Kamil Piekutowski <influence1982@gmail.com>
+
+Adding the meta-supadata layer to your build
+=================================================
+
+Run 'bitbake-layers add-layer meta-supadata'
+
