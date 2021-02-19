@@ -12,12 +12,10 @@ SRCREV = "834c036d3519337d409277d13f15f321759c5756"
 PV = "3.10.2"
 S = "${WORKDIR}/git/"
 
-inherit cmake distro_features_check mime
-
-REQUIRED_DISTRO_FEATURES = "x11"
+inherit cmake mime
 
 DEPENDS += " \
-    eudev \
+    udev \
     fftw \
     jack \
     jack-setup \
@@ -36,9 +34,8 @@ EXTRA_OECMAKE = "\
     -DSUPERNOVA=OFF \
     -DSC_ED=OFF \
     -DSC_EL=OFF \
-    -DSC_VIM=ON \
     -DSC_IDE=OFF \
-    -DNO_X11=ON \
+    -DNO_X11=OFF \
     -DSC_QT=OFF \
     ${SIMD_OPTIONS} \
 "
