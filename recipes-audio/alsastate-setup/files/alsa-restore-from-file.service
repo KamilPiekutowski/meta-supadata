@@ -1,0 +1,10 @@
+[Unit]
+Description=Loads alsamixer settingS from the SPECIFIED file.
+After=alsa-restore.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/alsactl --file /home/root/.config/alsa/asound.state restore
+
+[Install]
+WantedBy=multi-user.target
