@@ -1,14 +1,11 @@
-SUMMARY = " \
-    Sets up jack for supercollider on raspbery pi \
-    based on this giude: \
-    https://github.com/supercollider/supercollider/blob/develop/README_RASPBERRY_PI.md \
-"
-HOMEPAGE = "https://github.com/KamilPiekutowski/meta-supadata/blob/main/README.md"
+FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+
 LICENSE = "GPL-3.0"
 
-LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=b97a012949927931feb7793eee5ed924"
+LIC_FILES_CHKSUM = "file://MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
 SRC_URI += " \
+    file://MIT \
     file://limits.conf \
     file://.jackdrc \
  "
@@ -17,16 +14,28 @@ S = "${WORKDIR}"
 
 inherit allarch
 
-do_install() {
-    install -d ${D}/etc/security
-    install -d ${D}/home/root
-    install -m 755 ${WORKDIR}/limits.conf ${D}/etc/security
-    install -m 755 ${WORKDIR}/.jackdrc ${D}/home/root
+DEPENDS_appent = " \
+    jack \
+"
+IMAGE_INSTALL_append  = " \
+    jack-server \
+    jack-utils \
+"
+
+etcsecr = "/etc/security" 
+hroot = "/home/root"
+
+do_install_append() {
+    install -d 755 ${D}${etcsecr}
+    install -d 755 ${D}${hroot}
+
+    install -m 755 ${S}/limits.conf ${D}${etcsecr}
+    install -m 755 ${S}/.jackdrc ${D}${hroot}
 }
 
+
 FILES_${PN} = " \
-    /etc/security \
-    /home/root \
-    /etc/security/limits.conf \
-    /home/root/.jackdrc \
+    ${etcsecr}/limits.conf \
+    ${hroot}/.jackdrc \
 "
+
