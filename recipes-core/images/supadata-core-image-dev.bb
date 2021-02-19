@@ -24,6 +24,8 @@ IMAGE_INSTALL_append = " \
     jack-server \
     supercollider \
     jack-setup \
+    alsa-state \
+    alsastate-setup \
 "
 
 # Networking
