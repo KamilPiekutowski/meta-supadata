@@ -17,6 +17,8 @@ IMAGE_INSTALL_append = " \
     bash \
     vim \
     i2c-tools \
+    arduipi-ssd1306 \
+    oled-test \
 "
 # System audio
 IMAGE_INSTALL_append = " \
