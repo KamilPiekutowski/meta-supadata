@@ -4,6 +4,14 @@ require recipes-core/images/core-image-base.bb
 # Only raspberry pi machines
 COMPATIBLE_MACHINE = "^rpi$"
 
+# Qt5 SDK
+inherit populate_sdk_qt5
+
+# rasync
+IMAGE_INSTALL_append = " \
+    rsync \
+"
+
 # Rpi pin-header connectivity
 ENABLE_UART = "1"
 ENABLE_I2C = "1"
@@ -39,4 +47,9 @@ IMAGE_INSTALL_append = " \
 # SSH
 IMAGE_FEATURES_append = " \
     ssh-server-dropbear \
+"
+
+# QT
+IMAGE_INSTALL_append = " \
+    cinematicexperience \
 "
