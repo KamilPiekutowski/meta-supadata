@@ -1,0 +1,21 @@
+From f330304c0c8fad59abce395a455170b084f108f5 Mon Sep 17 00:00:00 2001
+From: Kamil Piekutowski <influence1982@gmail.com>
+Date: Sat, 21 Aug 2021 01:49:17 -0500
+Subject: [PATCH] removed unnecessary printf statement
+
+---
+ ssd1306_demo.cpp | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/ssd1306_demo.cpp b/ssd1306_demo.cpp
+index 5519c15..b2e8c4f 100644
+--- a/ssd1306_demo.cpp
++++ b/ssd1306_demo.cpp
+@@ -388,7 +388,6 @@ int main(int argc, char **argv)
+ 		if ( !display.init(OLED_I2C_RESET,opts.oled) )
+ 			exit(EXIT_FAILURE);
+ 	}
+-        printf("Display begini...\n");
+ 	display.begin();
+ 
+   // init done
