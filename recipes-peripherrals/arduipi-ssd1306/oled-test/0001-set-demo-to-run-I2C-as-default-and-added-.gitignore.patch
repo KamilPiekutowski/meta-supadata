@@ -1,0 +1,153 @@
+From 7cd7bc0c9ebf45c13dade84bcd9e28b277680231 Mon Sep 17 00:00:00 2001
+From: Kamil Piekutowski <influence1982@gmail.com>
+Date: Fri, 20 Aug 2021 18:10:54 -0500
+Subject: [PATCH] set demo to run I2C as default and added .gitignore
+
+---
+ .gitignore       |  1 +
+ ssd1306_demo.cpp | 36 ++++++++++++++++++++----------------
+ 2 files changed, 21 insertions(+), 16 deletions(-)
+ create mode 100644 .gitignore
+
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+index 0000000..e7ba78f
+--- /dev/null
++++ b/.gitignore
+@@ -0,0 +1 @@
++ssd1306_demo
+diff --git a/ssd1306_demo.cpp b/ssd1306_demo.cpp
+index 9f0c5e3..5519c15 100644
+--- a/ssd1306_demo.cpp
++++ b/ssd1306_demo.cpp
+@@ -45,7 +45,8 @@ struct s_opts
+ 
+ // default options values
+ s_opts opts = {
+-	OLED_ADAFRUIT_SPI_128x32,	// Default oled
++//	OLED_ADAFRUIT_SPI_128x32,	// Default oled
++  OLED_ADAFRUIT_I2C_128x32,
+   false										// Not verbose
+ };
+ 
+@@ -364,6 +365,7 @@ Comments:
+ ====================================================================== */
+ int main(int argc, char **argv)
+ {
++	printf("Starting oled demo...\n");
+ 	int i;
+ 	
+ 	
+@@ -374,19 +376,21 @@ int main(int argc, char **argv)
+ 	// SPI
+ 	if (display.oled_is_spi_proto(opts.oled))
+ 	{
++		printf("Settting up SPI display.\n");
+ 		// SPI change parameters to fit to your LCD
+ 		if ( !display.init(OLED_SPI_DC,OLED_SPI_RESET,OLED_SPI_CS, opts.oled) )
+ 			exit(EXIT_FAILURE);
+ 	}
+ 	else
+ 	{
++		printf("Settting up I2C display.\n");
+ 		// I2C change parameters to fit to your LCD
+ 		if ( !display.init(OLED_I2C_RESET,opts.oled) )
+ 			exit(EXIT_FAILURE);
+ 	}
+-
++        printf("Display begini...\n");
+ 	display.begin();
+-	
++
+   // init done
+   display.clearDisplay();   // clears the screen and buffer
+ 
+@@ -394,59 +398,59 @@ int main(int argc, char **argv)
+   // draw a single pixel
+   display.drawPixel(10, 10, WHITE);
+   display.display();
+-  sleep(2);
++  sleep(1);
+   display.clearDisplay();
+ 	
+   // draw many lines
+   testdrawline();
+   display.display();
+-  sleep(2);
++  sleep(1);
+   display.clearDisplay();
+ 
+   // draw rectangles
+   testdrawrect();
+   display.display();
+-  sleep(2);
++  sleep(1);
+   display.clearDisplay();
+ 
+   // draw multiple rectangles
+   testfillrect();
+   display.display();
+-  sleep(2);
++  sleep(1);
+   display.clearDisplay();
+ 
+   // draw mulitple circles
+   testdrawcircle();
+   display.display();
+-  sleep(2);
++  sleep(1);
+   display.clearDisplay();
+ 
+   // draw a white circle, 10 pixel radius
+   display.fillCircle(display.width()/2, display.height()/2, 10, WHITE);
+   display.display();
+-  sleep(2);
++  sleep(1);
+   display.clearDisplay();
+ 
+   testdrawroundrect();
+-  sleep(2);
++  sleep(1);
+   display.clearDisplay();
+ 
+   testfillroundrect();
+-  sleep(2);
++  sleep(1);
+   display.clearDisplay();
+ 
+   testdrawtriangle();
+-  sleep(2);
++  sleep(1);
+   display.clearDisplay();
+    
+   testfilltriangle();
+-  sleep(2);
++  sleep(1);
+   display.clearDisplay();
+ 
+   // draw the first ~12 characters in the font
+   testdrawchar();
+   display.display();
+-  sleep(2);
++  sleep(1);
+   display.clearDisplay();
+ 
+ 	// text display tests
+@@ -460,7 +464,7 @@ int main(int argc, char **argv)
+   display.setTextColor(WHITE);
+   display.printf("0x%8X\n", 0xDEADBEEF);
+   display.display();
+-  sleep(2); 
++  sleep(1); 
+ 
+ 	
+ 	// horizontal bargraph tests
+@@ -495,7 +499,7 @@ int main(int argc, char **argv)
+ 		
+   // draw scrolling text
+   testscrolltext();
+-  sleep(2);
++  sleep(1);
+   display.clearDisplay();
+ 
+ 

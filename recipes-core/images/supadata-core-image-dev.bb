@@ -27,15 +27,18 @@ IMAGE_INSTALL_append = " \
     i2c-tools \
     arduipi-ssd1306 \
     oled-test \
+    wiringpi \
 "
 # System audio
 IMAGE_INSTALL_append = " \
+    liblo \
     libjack \
     jack-server \
     supercollider \
     jack-setup \
     alsa-state \
     alsastate-setup \
+    alsa-utils \
 "
 
 # Networking
@@ -49,7 +52,32 @@ IMAGE_FEATURES_append = " \
     ssh-server-dropbear \
 "
 
-# QT
+# QT modules
 IMAGE_INSTALL_append = " \
-    cinematicexperience \
+    qtquickcontrols \
+    qtquickcontrols2 \
+    qtgraphicaleffects \
+    qtbase-plugins \
+    qtbase-tools \
+    qtdeclarative \
+    qtdeclarative-plugins \
+    qtdeclarative-tools \
+    qtdeclarative-qmlplugins \
+    qtmultimedia \
+    qtmultimedia-plugins \
+    qtmultimedia-qmlplugins \
+    qtimageformats-plugins \
+    qtsystems \
+    qtsystems-tools \
+    qtsystems-qmlplugins \
+    qtscript \
+    qt3d \
+    qt3d-qmlplugins \
+    qt3d-tools \
+    qtconnectivity-dev \
+    qtconnectivity-mkspecs \
+    qtconnectivity-qmlplugins \
+    qtlocation-plugins \
+    qtlocation-qmlplugins \
+    qtquickcontrols-qmlplugins \
 "
