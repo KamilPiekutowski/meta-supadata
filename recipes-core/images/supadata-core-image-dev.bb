@@ -28,6 +28,7 @@ IMAGE_INSTALL_append = " \
     arduipi-ssd1306 \
     oled-test \
     wiringpi \
+    spidev-example \
 "
 # System audio
 IMAGE_INSTALL_append = " \
@@ -35,6 +36,7 @@ IMAGE_INSTALL_append = " \
     libjack \
     jack-server \
     supercollider \
+    sd1200-sclang \
     jack-setup \
     alsa-state \
     alsastate-setup \
