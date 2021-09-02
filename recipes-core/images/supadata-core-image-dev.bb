@@ -27,7 +27,8 @@ IMAGE_INSTALL_append = " \
     i2c-tools \
     arduipi-ssd1306 \
     oled-test \
-    wiringpi \
+    wiringpi-2.60 \
+    raspberry-pi-gpio-interrupt \
     spidev-example \
 "
 # System audio

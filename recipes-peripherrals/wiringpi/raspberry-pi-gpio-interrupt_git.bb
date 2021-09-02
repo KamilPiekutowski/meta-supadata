@@ -21,7 +21,7 @@ SRCREV = "e936342284f6446b58ddbcaaf8ec87052a564bab"
 S = "${WORKDIR}/git"
 
 DEPENDS += "\
-    wiringpi \
+    wiringpi-2.60 \
 "
 
 do_compile () {

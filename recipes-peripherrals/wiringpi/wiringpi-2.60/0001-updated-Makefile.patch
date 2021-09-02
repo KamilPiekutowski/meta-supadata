@@ -1,0 +1,22 @@
+From 497240e70f87f2503779e819452881e3cf12075d Mon Sep 17 00:00:00 2001
+From: Kamil Piekutowski <influence1982@gmail.com>
+Date: Wed, 1 Sep 2021 21:35:16 -0500
+Subject: [PATCH] updated Makefile
+
+---
+ wiringPi/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/wiringPi/Makefile b/wiringPi/Makefile
+index 8450c73..46ba306 100644
+--- a/wiringPi/Makefile
++++ b/wiringPi/Makefile
+@@ -91,7 +91,7 @@ $(STATIC):	$(OBJ)
+ 
+ $(DYNAMIC):	$(OBJ)
+ 	@echo "[Link (Dynamic)]"
+-	@$(CC) -shared -Wl,-soname,$(BASE_NAME).so.$(DYN_VERS_MAJ) -o $(BASE_NAME).so -lpthread $(OBJ)
++	@$(CC) -shared -Wl,-soname,$(BASE_NAME).so.$(DYN_VERS_MAJ) -o $(BASE_NAME).so -lpthread -lcrypt -lm -lrt $(OBJ)
+ 
+ .c.o:
+ 	@echo [Compile] $<
