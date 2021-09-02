@@ -1,0 +1,16 @@
+From 04a6cc61c4a62dbf02f018141fcf3fcf0b787c5d Mon Sep 17 00:00:00 2001
+From: Kamil Piekutowski <influence1982@gmail.com>
+Date: Wed, 1 Sep 2021 21:37:53 -0500
+Subject: [PATCH] updated .gitignore
+
+---
+ .gitignore | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/.gitignore b/.gitignore
+index e7ba78f..403d216 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1 +1,2 @@
+ ssd1306_demo
++spidev_test

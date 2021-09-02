@@ -1,0 +1,110 @@
+From 8fcd1a396f52b21edca0cae0b8f8af8f721e0ed5 Mon Sep 17 00:00:00 2001
+From: Kamil Piekutowski <influence1982@gmail.com>
+Date: Tue, 31 Aug 2021 18:21:03 -0500
+Subject: [PATCH] added additional headers and c files
+
+---
+ debian-template/wiringPi/DEBIAN/postinst |  2 --
+ gpio/Makefile                            |  4 ++--
+ wiringPi/Makefile                        | 12 ++++++++----
+ wiringPiD/Makefile                       | 21 +++++++++++++++------
+ 4 files changed, 25 insertions(+), 14 deletions(-)
+
+diff --git a/debian-template/wiringPi/DEBIAN/postinst b/debian-template/wiringPi/DEBIAN/postinst
+index 4997e98..f348dc9 100755
+--- a/debian-template/wiringPi/DEBIAN/postinst
++++ b/debian-template/wiringPi/DEBIAN/postinst
+@@ -1,5 +1,3 @@
+ #!/bin/sh
+ set -e
+-/bin/chown root.root	/usr/bin/gpio
+-/bin/chmod 4755		/usr/bin/gpio
+ /sbin/ldconfig
+diff --git a/gpio/Makefile b/gpio/Makefile
+index c98ca51..67d32f3 100644
+--- a/gpio/Makefile
++++ b/gpio/Makefile
+@@ -74,9 +74,9 @@ tags:	$(SRC)
+ install: gpio
+ 	@echo "[Install]"
+ 	@install -d $(BIN_DIR)
+-	@install -m 4755 -o root -g root gpio $(BIN_DIR)
++	@install -m 4755 gpio $(BIN_DIR)
+ 	@install -d $(DESTDIR)$(PREFIX)/share/man/man1
+-	@install -m 644 -o root -g root gpio.1 $(DESTDIR)$(PREFIX)/share/man/man1
++	@install -m 644 gpio.1 $(DESTDIR)$(PREFIX)/share/man/man1
+ 
+ .PHONY:	install-deb
+ install-deb:	gpio
+diff --git a/wiringPi/Makefile b/wiringPi/Makefile
+index 5fc0659..8450c73 100644
+--- a/wiringPi/Makefile
++++ b/wiringPi/Makefile
+@@ -53,9 +53,11 @@ SRC	=	wiringPi.c						\
+ 		sr595.c							\
+ 		pcf8574.c pcf8591.c					\
+ 		mcp3002.c mcp3004.c mcp4802.c mcp3422.c			\
+-		max31855.c max5322.c					\
++		max31855.c max5322.c ads1115.c				\
+ 		sn3218.c						\
+-		drcSerial.c						\
++		bmp180.c htu21d.c ds18b20.c rht03.c			\
++		drcSerial.c drcNet.c					\
++		pseudoPins.c						\
+ 		wpiExtensions.c
+ 
+ HEADERS =	wiringPi.h						\
+@@ -67,9 +69,11 @@ HEADERS =	wiringPi.h						\
+ 		sr595.h							\
+ 		pcf8574.h pcf8591.h					\
+ 		mcp3002.h mcp3004.h mcp4802.h mcp3422.h			\
+-		max31855.h max5322.h					\
++		max31855.h max5322.h ads1115.h				\
+ 		sn3218.h						\
+-		drcSerial.h						\
++		bmp180.h htu21d.h ds18b20.h rht03.h			\
++		drcSerial.h drcNet.h      				\
++		pseudoPins.h						\
+ 		wpiExtensions.h 
+ 
+ 
+diff --git a/wiringPiD/Makefile b/wiringPiD/Makefile
+index e050207..b89eb7f 100644
+--- a/wiringPiD/Makefile
++++ b/wiringPiD/Makefile
+@@ -33,10 +33,20 @@ endif
+ DEBUG	= -O2
+ CC	?= gcc
+ INCLUDE	= -I$(DESTDIR)$(PREFIX)/include
+-CFLAGS	= $(DEBUG) -Wall -Wextra $(INCLUDE) -Winline -pipe $(EXTRA_CFLAGS)
+ 
+-LDFLAGS	= -L$(DESTDIR)$(PREFIX)/lib
+-LIBS    = -lwiringPi -lwiringPiDev -lpthread -lrt -lm -lcrypt
++#DEBUG  ?= -g -O0
++CFLAGS  = $(DEBUG) $(DEFS) -Wformat=2 -Wall -Winline $(INCLUDE) -pipe -fPIC
++DEBUG   ?= -O2
++CC      ?= gcc
++DEFS    = -D_GNU_SOURCE
++INCLUDE ?= -I.
++CFLAGS  ?= $(DEBUG) $(DEFS) -Wformat=2 -Wall -Winline $(INCLUDE) -pipe -fPIC
++
++
++###CFLAGS	= $(DEBUG) -Wall -Wextra $(INCLUDE) -Winline -pipe $(EXTRA_CFLAGS)
++
++###LDFLAGS	= -L$(DESTDIR)$(PREFIX)/lib
++###LIBS    = -lwiringPi -lwiringPiDev -lpthread -lrt -lm -lcrypt
+ 
+ # May not need to  alter anything below this line
+ ###############################################################################
+@@ -68,9 +78,8 @@ tags:	$(SRC)
+ .PHONY:	install
+ install: wiringpid
+ 	$Q echo "[Install]"
+-	$Q mkdir -p		$(DESTDIR)$(PREFIX)/sbin
+-	$Q cp wiringpid		$(DESTDIR)$(PREFIX)/sbin
+-	$Q chown root.root	$(DESTDIR)$(PREFIX)/sbin/wiringpid
++	$Q install -m 0755 -d 	                $(DESTDIR)$(PREFIX)/sbin
++	$Q install -m 0755 wiringpid		$(DESTDIR)$(PREFIX)/sbin
+ 
+ #	$Q mkdir -p		$(DESTDIR)$(PREFIX)/man/man8
+ #	$Q cp gpio.1		$(DESTDIR)$(PREFIX)/man/man8

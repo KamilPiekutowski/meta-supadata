@@ -1,0 +1,81 @@
+From 5097c8a6fec722733792da034c44f5bc76880650 Mon Sep 17 00:00:00 2001
+From: Kamil Piekutowski <influence1982@gmail.com>
+Date: Wed, 1 Sep 2021 21:33:36 -0500
+Subject: [PATCH] reading from pin 18 on rpi
+
+---
+ Makefile         | 20 ++++++++++++++++++++
+ gpio-interrupt.c |  9 ++++++---
+ 2 files changed, 26 insertions(+), 3 deletions(-)
+ create mode 100644 Makefile
+
+diff --git a/Makefile b/Makefile
+new file mode 100644
+index 0000000..075515f
+--- /dev/null
++++ b/Makefile
+@@ -0,0 +1,20 @@
++LIBDIR=$(PREFIX)/lib
++# lib name
++LIB=libssd1306
++# shared library name
++LIBNAME=$(LIB).so.1.0
++
++
++CCFLAGS= -Ofast -Wall -fpermissive
++
++
++TARGET= gpio-interrupt
++
++all: $(TARGET)
++
++gpio-interrupt: gpio-interrupt.c
++	$(CC) $(CFLAGS) -lwiringPi -lwiringPiDev gpio-interrupt.c -o gpio-interrupt
++
++
++clean:
++	rm -rf $(TARGET) *.o
+diff --git a/gpio-interrupt.c b/gpio-interrupt.c
+index e032a43..afc9ef2 100644
+--- a/gpio-interrupt.c
++++ b/gpio-interrupt.c
+@@ -3,7 +3,7 @@
+ #include <wiringPi.h>
+ 
+ // Which GPIO pin we're using
+-#define PIN 2
++#define PIN 18
+ // How much time a change must be since the last in order to count as a change
+ #define IGNORE_CHANGE_BELOW_USEC 10000
+ 
+@@ -16,6 +16,7 @@ struct timeval last_change;
+ void handle(void) {
+ 	struct timeval now;
+ 	unsigned long diff;
++	volatile static int count = 0;
+ 
+ 	gettimeofday(&now, NULL);
+ 
+@@ -24,11 +25,12 @@ void handle(void) {
+ 
+ 	// Filter jitter
+ 	if (diff > IGNORE_CHANGE_BELOW_USEC) {
++	count++;
+ 		if (state) {
+-			printf("Falling\n");
++			printf("Falling, count %d\n", count);
+ 		}
+ 		else {
+-			printf("Rising\n");
++			printf("Rising, count %d\n", count);
+ 		}
+ 
+ 		state = !state;
+@@ -40,6 +42,7 @@ void handle(void) {
+ int main(void) {
+ 	// Init
+ 	wiringPiSetup();
++        wiringPiSetupGpio();
+ 
+ 	// Set pin to output in case it's not
+ 	pinMode(PIN, OUTPUT);

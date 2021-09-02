@@ -28,6 +28,7 @@ EXTRA_OEMAKE = " \
 do_install () {
     install -d 0755 ${D}/usr/bin
     install -m 0755 ${S}/ssd1306_demo ${D}/usr/bin
+    install -m 0755 ${S}/spidev_test ${D}/usr/bin
 }
 
 INSANE_SKIP_${PN} += "ldflags"
@@ -44,8 +45,7 @@ RDEPENDS_${NP} = " \
 FILES_${NP} = " \
     /usr/bin \
     /usr/bin/ssd1306_demo \
+    /usr/bin/spidev_test \
 "
-
-
 
 INSANE_SKIP_${PN} += "arduipi-ssd1306-dev"
